@@ -6,6 +6,7 @@ file_path = ("dataset.csv")
 
 df = pd.read_csv(file_path)
 
+
 print(df.head())
 print (df.columns )
 # print (df.sample(15))
