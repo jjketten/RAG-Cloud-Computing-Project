@@ -2,7 +2,7 @@ const { app } = require('@azure/functions');
 const axios = require('axios');
 
 const AZURE_SEARCH_URL = 'https://ithelpdesk.search.windows.net';
-const AZURE_INDEX = 'azureblob-index';
+const AZURE_INDEX = 'test2-april3'; 
 const AZURE_API_KEY = process.env["AZURE_API_KEY"];
 const DEEPSEEK_API_KEY = process.env["DEEPSEEK_API_KEY"];
 
@@ -15,7 +15,7 @@ app.http('HelpDeskSearch', {
     if (!issue) {
       return {
         status: 400,
-        body: 'Missing required query parameter: issue'
+        body: 'In the url add ?issue=something'
       };
     }
 
@@ -36,11 +36,10 @@ app.http('HelpDeskSearch', {
 
       const results = searchResponse.data.value;
 
-      // Step 1: Filter and truncate content
+      
       const contentBlocks = results
-        .map(r => r.content)
-        .filter(c => typeof c === "string" && c.trim().length > 0)
-        .map(c => c.length > 3000 ? c.slice(0, 3000) + '…' : c); // Optional: limit each to 3k chars
+        .filter(r => typeof r.body === "string" && typeof r.answer === "string")
+        .map(r => `Subject: ${r.subject || 'No subject'}\nIssue: ${r.body}\nResponse: ${r.answer}`);
 
       const contextText = contentBlocks.join('\n\n');
 
@@ -51,20 +50,14 @@ app.http('HelpDeskSearch', {
           body: JSON.stringify({
             original_query: issue,
             retrieved_tickets: [],
-            ai_response: "No usable ticket content was found."
+            ai_response: "No good tickets that could be used were found."
           })
         };
       }
 
-      // Step 2: Construct full DeepSeek prompt
-      const userPrompt = `The user is reporting the following issue: "${issue}". Use the helpdesk ticket content below to assist them:\n\n${contextText}`;
+      
+      const prompt = `The user is reporting this issue: "${issue}". Use the following helpdesk tickets to assist them:\n\n${contextText}`;
 
-      // Optional: truncate if total string exceeds 10,000 characters
-      const finalPrompt = userPrompt.length > 9000
-        ? userPrompt.slice(0, 9000) + '\n\n...(truncated)'
-        : userPrompt;
-
-      // Step 3: Send to DeepSeek
       const deepSeekResponse = await axios.post(
         'https://api.deepseek.com/v1/chat/completions',
         {
@@ -72,11 +65,11 @@ app.http('HelpDeskSearch', {
           messages: [
             {
               role: "system",
-              content: "You are an IT helpdesk assistant. Use the provided helpdesk ticket content to assist the user."
+              content: "You are an IT helpdesk assistant. Use only the provided ticket data to help the user."
             },
             {
               role: "user",
-              content: finalPrompt
+              content: prompt
             }
           ]
         },
@@ -101,7 +94,7 @@ app.http('HelpDeskSearch', {
       };
 
     } catch (err) {
-      context.error("❌ Error with DeepSeek request:", err.message);
+      context.error("SOmething went wrong while fetchin your response:", err.message);
       return {
         status: 500,
         body: 'Error: ' + err.message
