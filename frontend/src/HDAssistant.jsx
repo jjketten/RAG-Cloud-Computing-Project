@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+//Update Your Imports
+import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
 import { FaUser, FaArrowLeft, FaHeadset, FaCommentDots, FaPaperPlane } from 'react-icons/fa';
 
@@ -20,6 +21,13 @@ const HDAssistant = () => {
   const [sidebarCollapsed, setSidebarCollaspsed] = useState(false);
   const [input, setInput] = useState('');
   const [chat, setChat] = useState([]);
+
+  //Add the Ref + Scroll Logic
+  const chatEndRef = useRef(null);
+
+useEffect(() => {
+  chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+}, [chat]);
 
   const handleSend = () => {
     if (!input.trim()) return;
@@ -71,15 +79,16 @@ const HDAssistant = () => {
 
         <div className="chatbox">
           <div className="chat-log">
-            {chat.map((msg, idx) => (
-              <div
-                key={idx}
-                className={`chat-bubble ${msg.sender === 'user' ? 'user' : 'bot'}`}
-              >
-                {msg.text}
-              </div>
-            ))}
-          </div>
+  {chat.map((msg, idx) => (
+    <div
+      key={idx}
+      className={`chat-bubble ${msg.sender === 'user' ? 'user' : 'bot'}`}
+    >
+      {msg.text}
+    </div>
+  ))}
+  <div ref={chatEndRef} />
+</div>
 
           <div className="chat-input-row">
             <FaCommentDots />
