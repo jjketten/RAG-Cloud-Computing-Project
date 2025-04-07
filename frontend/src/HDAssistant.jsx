@@ -16,7 +16,8 @@ const faqs = {
   "antivirus": "Please visit our software portal to install the company-approved antivirus."
 };
 
-const HelpdeskAssistant = () => {
+const HDAssistant = () => {
+  const [sidebarCollapsed, setSidebarCollaspsed] = useState(false);
   const [input, setInput] = useState('');
   const [chat, setChat] = useState([]);
 
@@ -36,7 +37,7 @@ const HelpdeskAssistant = () => {
     for (const key in faqs) {
       if (lower.includes(key)) return faqs[key];
     }
-    return "I'm not sure about that, but you can contact our IT desk at support@company.com.";
+    return "I'm not sure about that, but you can contact our IT desk at support@RAG.com.";
   };
 
   const handleKeyPress = (e) => {
@@ -46,11 +47,10 @@ const HelpdeskAssistant = () => {
   return (
     <div className="container">
       {/* Sidebar */}
-      <div className="sidebar">
+      <div className={`sidebar ${sidebarCollapsed ? 'collapsed' : ''}`}>
         <div className="sidebar-header">
           <FaUser className="icon" />
-          <FaArrowLeft className="icon" />
-          <h1 className="title">It Helpdesk Assistant</h1>
+          <FaArrowLeft className="icon" onClick={() => setSidebarCollaspsed(!sidebarCollapsed)}/>
         </div>
         <div className="faq-section">
           <h2>FAQs</h2>
@@ -64,6 +64,9 @@ const HelpdeskAssistant = () => {
 
       {/* Main Content */}
       <div className="main">
+        <div className="main-header">
+          <h1 className="main-title">IT Helpdesk Assistant</h1>
+          </div>
         <FaHeadset className="headset-icon" />
 
         <div className="chatbox">
@@ -106,4 +109,4 @@ const HelpdeskAssistant = () => {
   );
 };
 
-export default HelpdeskAssistant;
+export default HDAssistant;

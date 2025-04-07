@@ -76,9 +76,8 @@ body, html, #root {
 
 /* Sidebar */
 .sidebar {
-  width: 25%;
-  background-color: rgba(255, 255, 255, 0.7); /* semi-transparent white */
-  backdrop-filter: blur(6px); /* optional: gives frosted glass effect */
+  width: 15%;
+  background-color: rgba(67, 56, 226, 0);
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -86,17 +85,12 @@ body, html, #root {
 
 .sidebar-header {
   display: flex;
-  align-items: center;
-  gap: 10px;
+  align-items: right;
+  gap: 175px;
 }
 
 .icon {
   font-size: 1.2rem;
-}
-
-.title {
-  font-size: 1rem;
-  font-weight: bold;
 }
 
 .faq-section {
@@ -118,9 +112,26 @@ body, html, #root {
   font-size: 0.9rem;
 }
 
-/* Main */
+.sidebar.collapsed{
+  width: 60px;
+  padding: 20px 10px;
+}
+
+.sidebar .icon{
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.sidebar.collapsed .icon:nth-child(2) {
+  transform: rotate(180deg);
+}
+
+.sidebar.collapsed .faq-section {
+  display: none;
+}
+
 .main {
-  width: 75%;
+  width: 85%;
   position: relative;
   background-image: url('https://media.istockphoto.com/id/1397030090/photo/colorful-pastel-sky-with-clouds-at-beautiful-sunset-as-natural-background.jpg?s=612x612&w=0&k=20&c=WrRCAvlZX2jOQ8UTDHgiTs2ZhYs2aO8uw4sWJASxo5c=');
   background-size: cover;
@@ -129,6 +140,22 @@ body, html, #root {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+
+.main-header {
+  position: absolute;
+  top:5px;
+  left:5px;
+  padding:20px;
+  z-index:2;
+}
+
+.main-title{
+  color:black;
+  font-size: 1.8rem;
+  font-weight:bold;
+  margin: 0;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
 }
 
 .headset-icon {
