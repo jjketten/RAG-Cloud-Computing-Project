@@ -1,0 +1,52 @@
+import React from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Home, Ticket, Bot, BookOpen, Settings } from "lucide-react";
+import { motion } from "framer-motion";
+
+const sections = [
+  { title: "Dashboard", icon: <Home className="w-5 h-5" />, description: "Overview of support activity" },
+  { title: "My Tickets", icon: <Ticket className="w-5 h-5" />, description: "View and manage your tickets" },
+  { title: "AI Troubleshooter", icon: <Bot className="w-5 h-5" />, description: "Get instant help with common issues" },
+  { title: "Knowledge Base", icon: <BookOpen className="w-5 h-5" />, description: "Browse helpful articles and guides" },
+  { title: "Settings", icon: <Settings className="w-5 h-5" />, description: "Manage your profile and preferences" },
+];
+
+export default function HelpdeskDashboard() {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-[#f1f5f9] to-[#e2e8f0] p-6">
+      <motion.h1
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6 }}
+        className="text-3xl font-bold mb-8 text-center text-slate-800"
+      >
+        IT Helpdesk Portal
+      </motion.h1>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {sections.map((section, index) => (
+          <motion.div
+            key={section.title}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1 }}
+          >
+            <Card className="rounded-2xl shadow-md bg-white hover:shadow-xl transition">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-3 mb-4 text-blue-600">
+                  {section.icon}
+                  <h2 className="text-xl font-semibold">{section.title}</h2>
+                </div>
+                <p className="text-gray-600 text-sm mb-4">{section.description}</p>
+                <Button className="w-full" variant="outline">
+                  Go to {section.title}
+                </Button>
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+}
