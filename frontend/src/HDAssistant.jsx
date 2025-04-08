@@ -1,7 +1,7 @@
-//Update Your Imports
 import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
 import { FaUser, FaArrowLeft, FaHeadset, FaCommentDots, FaPaperPlane } from 'react-icons/fa';
+import aiHelpDeskService from './aiHelpDeskService';
 
 const suggestions = [
   "I forgot my password",
@@ -29,23 +29,31 @@ useEffect(() => {
   chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
 }, [chat]);
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!input.trim()) return;
 
     const userMsg = { sender: 'user', text: input };
-    const responseText = getBotResponse(input);
-    const botMsg = { sender: 'bot', text: responseText };
-
-    setChat([...chat, userMsg, botMsg]);
+    setChat((prevChat) => [...prevChat, userMsg]);
     setInput('');
+
+    const responseText = await getBotResponse(input);
+    const botMsg = { sender: 'bot', text: responseText };
+    setChat((prevChat) => [...prevChat, botMsg]);    
   };
 
-  const getBotResponse = (message) => {
+  const getBotResponse = async (message) => {
     const lower = message.toLowerCase();
     for (const key in faqs) {
       if (lower.includes(key)) return faqs[key];
     }
-    return "I'm not sure about that, but you can contact our IT desk at support@RAG.com.";
+
+    try {
+      const result = await aiHelpDeskService.getHelpDeskResponse(message);
+      return result;
+    } catch (error) {
+      console.error('Error fetching response:', error.message);
+      return "Sorry, I couldn't fetch a response at the moment. Please try again later."
+    }
   };
 
   const handleKeyPress = (e) => {
