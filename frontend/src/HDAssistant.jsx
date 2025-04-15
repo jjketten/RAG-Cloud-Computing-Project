@@ -25,20 +25,25 @@ const HDAssistant = () => {
   //Add the Ref + Scroll Logic
   const chatEndRef = useRef(null);
 
-useEffect(() => {
-  chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-}, [chat]);
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [chat]);
 
   const handleSend = async () => {
     if (!input.trim()) return;
 
     const userMsg = { sender: 'user', text: input };
-    setChat((prevChat) => [...prevChat, userMsg]);
+    const typingMsg = { sender: 'bot', text: '...' };
+    setChat((prevChat) => [...prevChat, userMsg, typingMsg]);
     setInput('');
 
     const responseText = await getBotResponse(input);
     const botMsg = { sender: 'bot', text: responseText };
-    setChat((prevChat) => [...prevChat, botMsg]);    
+    setChat((prevChat) => {
+      const updatedChat = [...prevChat];
+      updatedChat[updatedChat.indexOf(typingMsg)] = botMsg;
+      return updatedChat;
+    });
   };
 
   const getBotResponse = async (message) => {
@@ -66,7 +71,7 @@ useEffect(() => {
       <div className={`sidebar ${sidebarCollapsed ? 'collapsed' : ''}`}>
         <div className="sidebar-header">
           <FaUser className="icon" />
-          <FaArrowLeft className="icon" onClick={() => setSidebarCollaspsed(!sidebarCollapsed)}/>
+          <FaArrowLeft className="icon" onClick={() => setSidebarCollaspsed(!sidebarCollapsed)} />
         </div>
         <div className="faq-section">
           <h2>FAQs</h2>
@@ -82,21 +87,21 @@ useEffect(() => {
       <div className="main">
         <div className="main-header">
           <h1 className="main-title">IT Helpdesk Assistant</h1>
-          </div>
+        </div>
         <FaHeadset className="headset-icon" />
 
         <div className="chatbox">
           <div className="chat-log">
-  {chat.map((msg, idx) => (
-    <div
-      key={idx}
-      className={`chat-bubble ${msg.sender === 'user' ? 'user' : 'bot'}`}
-    >
-      {msg.text}
-    </div>
-  ))}
-  <div ref={chatEndRef} />
-</div>
+            {chat.map((msg, idx) => (
+              <div
+                key={idx}
+                className={`chat-bubble ${msg.sender === 'user' ? 'user' : 'bot'}`}
+              >
+                {msg.text}
+              </div>
+            ))}
+            <div ref={chatEndRef} />
+          </div>
 
           <div className="chat-input-row">
             <FaCommentDots />
@@ -111,14 +116,14 @@ useEffect(() => {
           </div>
 
           <ul className="suggestions">
-   {input &&
-    suggestions
-      .filter(s => s.toLowerCase().includes(input.toLowerCase()))
-      .map((text, i) => (
-        <li key={i} onClick={() => setInput(text)}>
-          <FaCommentDots /> {text}
-        </li>
-            ))}
+            {input &&
+              suggestions
+                .filter(s => s.toLowerCase().includes(input.toLowerCase()))
+                .map((text, i) => (
+                  <li key={i} onClick={() => setInput(text)}>
+                    <FaCommentDots /> {text}
+                  </li>
+                ))}
           </ul>
         </div>
       </div>

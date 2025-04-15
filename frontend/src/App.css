@@ -1,4 +1,6 @@
-body, html, #root {
+body,
+html,
+#root {
   margin: 0;
   height: 100%;
   font-family: sans-serif;
@@ -8,70 +10,7 @@ body, html, #root {
 .container {
   display: flex;
   height: 100vh;
-  width: 100vw;.chatbox {
-    background-color: rgba(255, 255, 255, 0.85);
-    border-radius: 15px;
-    padding: 20px;
-    width: 400px;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .chat-input-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 15px;
-  }
-  
-  .chat-input-row input {
-    flex: 1;
-    border: none;
-    outline: none;
-    font-weight: bold;
-    font-size: 1rem;
-    background: transparent;
-  }
-  
-  .chat-input-row button {
-    border: none;
-    background: none;
-    cursor: pointer;
-    font-size: 1rem;
-  }
-  
-  .chat-log {
-    max-height: 200px;
-    overflow-y: auto;
-    margin-bottom: 10px;
-  }
-  
-  .chat-bubble {
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 10px;
-    font-size: 0.9rem;
-  }
-  
-  .chat-bubble.user {
-    background-color: #daf0ff;
-    align-self: flex-end;
-  }
-  
-  .chat-bubble.bot {
-    background-color: #f2f2f2;
-    align-self: flex-start;
-  }
-  
-  .suggestions li {
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  
-  .suggestions li:hover {
-    background-color: #e9e9e9;
-  }
-  
+  width: 100vw;
 }
 
 /* Sidebar */
@@ -81,12 +20,14 @@ body, html, #root {
   padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;}
+  justify-content: space-between;
+  transition: width 0.3s ease;
+}
 
 .sidebar-header {
   display: flex;
-  align-items: right;
-  gap: 175px;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .icon {
@@ -112,12 +53,12 @@ body, html, #root {
   font-size: 0.9rem;
 }
 
-.sidebar.collapsed{
+.sidebar.collapsed {
   width: 60px;
   padding: 20px 10px;
 }
 
-.sidebar .icon{
+.sidebar .icon {
   cursor: pointer;
   transition: transform 0.3s ease;
 }
@@ -131,7 +72,7 @@ body, html, #root {
 }
 
 .main {
-  width: 85%;
+  flex: 1;
   position: relative;
   background-image: url('https://media.istockphoto.com/id/1397030090/photo/colorful-pastel-sky-with-clouds-at-beautiful-sunset-as-natural-background.jpg?s=612x612&w=0&k=20&c=WrRCAvlZX2jOQ8UTDHgiTs2ZhYs2aO8uw4sWJASxo5c=');
   background-size: cover;
@@ -144,18 +85,18 @@ body, html, #root {
 
 .main-header {
   position: absolute;
-  top:5px;
-  left:5px;
-  padding:20px;
-  z-index:2;
+  top: 5px;
+  left: 5px;
+  padding: 20px;
+  z-index: 2;
 }
 
-.main-title{
-  color:black;
+.main-title {
+  color: black;
   font-size: 1.8rem;
-  font-weight:bold;
+  font-weight: bold;
   margin: 0;
-  text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 .headset-icon {
@@ -168,23 +109,55 @@ body, html, #root {
   background-color: rgba(255, 255, 255, 0.85);
   border-radius: 15px;
   padding: 20px;
-  width: 400px;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
 }
 
-.chat-input {
+.chat-log {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+.chat-bubble {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  border: lightgray 1px solid;
+}
+
+.chat-bubble.user {
+  background-color: #daf0ff;
+  align-self: flex-end;
+}
+
+.chat-bubble.bot {
+  background-color: #f2f2f2;
+  align-self: flex-start;
+}
+
+.chat-input-row {
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
   gap: 10px;
+  margin-bottom: 15px;
 }
 
-.chat-input input {
+.chat-input-row input {
   flex: 1;
   border: none;
   outline: none;
-  font-weight: bold;
   font-size: 1rem;
   background: transparent;
+}
+
+.chat-input-row button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 1rem;
 }
 
 .suggestions {
