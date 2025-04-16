@@ -54,6 +54,7 @@ const HDAssistant = () => {
 
     try {
       const result = await aiHelpDeskService.getHelpDeskResponse(message);
+      console.log(result)
       return result;
     } catch (error) {
       console.error('Error fetching response:', error.message);
