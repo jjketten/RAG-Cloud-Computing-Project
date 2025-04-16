@@ -1,7 +1,7 @@
 const axios = require("axios");
 
-const AZURE_SEARCH_URL = "https://ithelpdesk.search.windows.net";
-const AZURE_INDEX = "azureblob-index";
+const AZURE_SEARCH_URL = "https://rag-helpdesk-test.search.windows.net/";
+const AZURE_INDEX = "test2";
 const AZURE_API_KEY = process.env["AZURE_API_KEY"];
 
 module.exports = async function (context, req) {

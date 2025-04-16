@@ -126,6 +126,7 @@ html,
   border-radius: 10px;
   font-size: 0.9rem;
   border: lightgray 1px solid;
+  color: darkslategray;
 }
 
 .chat-bubble.user {
