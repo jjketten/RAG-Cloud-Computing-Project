@@ -4,7 +4,7 @@ const getHelpDeskResponse = async (issue) => {
     }
 
     try {
-        const response = await fetch(`/api/HelpDeskSearch?issue=${encodeURIComponent(issue)}`);
+        const response = await fetch(`https://raghelpdeskbackend.azurewebsites.net/?issue=${encodeURIComponent(issue)}`);
 
         if (!response.ok) {
             throw new Error(`Request failed with status ${response.status}`);
