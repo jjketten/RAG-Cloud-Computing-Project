@@ -1,8 +1,8 @@
 const { app } = require('@azure/functions');
 const axios = require('axios');
 
-const AZURE_SEARCH_URL = 'https://ithelpdesk.search.windows.net';
-const AZURE_INDEX = 'test2-april3'; 
+const AZURE_SEARCH_URL = 'https://rag-helpdesk-test.search.windows.net/';
+const AZURE_INDEX = 'test2'; 
 const AZURE_API_KEY = process.env["AZURE_API_KEY"];
 const DEEPSEEK_API_KEY = process.env["DEEPSEEK_API_KEY"];
 
@@ -56,7 +56,7 @@ app.http('HelpDeskSearch', {
       }
 
       
-      const prompt = `The user is reporting this issue: "${issue}". Use the following helpdesk tickets to assist them:\n\n${contextText}`;
+      const prompt = `The user is reporting this issue: "${issue}". Use the following helpdesk tickets to assist them & provide a user-friendly formatted response:\n\n${contextText}`;
 
       const deepSeekResponse = await axios.post(
         'https://api.deepseek.com/v1/chat/completions',

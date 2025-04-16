@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://it-rag-helpdesk.azurewebsites.net',
+        target: 'https://raghelpdeskbackend.azurewebsites.net/',
         changeOrigin: true,
       },
     },
