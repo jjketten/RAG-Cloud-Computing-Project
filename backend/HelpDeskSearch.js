@@ -85,7 +85,7 @@ app.http('HelpDeskSearch', {
 
       return {
         status: 200,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : 'https://*.github.io' },
         body: JSON.stringify({
           original_query: issue,
           retrieved_tickets: results,
@@ -94,7 +94,7 @@ app.http('HelpDeskSearch', {
       };
 
     } catch (err) {
-      context.error("SOmething went wrong while fetchin your response:", err.message);
+      context.error("Something went wrong while fetchin your response:", err.message);
       return {
         status: 500,
         body: 'Error: ' + err.message
