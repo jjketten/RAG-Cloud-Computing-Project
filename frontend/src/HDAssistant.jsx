@@ -65,6 +65,10 @@ const HDAssistant = () => {
     if (e.key === 'Enter') handleSend();
   };
 
+  const formatText = (text) => {
+    return text.replace(/\n/g, "<br/>");
+  };
+
   return (
     <div className="container">
       {/* Sidebar */}
@@ -96,9 +100,8 @@ const HDAssistant = () => {
               <div
                 key={idx}
                 className={`chat-bubble ${msg.sender === 'user' ? 'user' : 'bot'}`}
-              >
-                {msg.text}
-              </div>
+                dangerouslySetInnerHTML={{ __html: formatText(msg.text) }}
+              />
             ))}
             <div ref={chatEndRef} />
           </div>
