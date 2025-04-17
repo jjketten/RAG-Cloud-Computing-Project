@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
-import { FaUser, FaArrowLeft, FaHeadset, FaCommentDots, FaPaperPlane } from 'react-icons/fa';
+import { FaUser, FaArrowLeft, FaHeadset, FaCommentDots, FaPaperPlane, FaSignOutAlt } from 'react-icons/fa';
 import aiHelpDeskService from './aiHelpDeskService';
 
 const suggestions = [
@@ -19,8 +19,10 @@ const faqs = {
 
 const HDAssistant = () => {
   const [sidebarCollapsed, setSidebarCollaspsed] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
   const [input, setInput] = useState('');
   const [chat, setChat] = useState([]);
+  const userMenuRef = useRef(null);
 
   //Add the Ref + Scroll Logic
   const chatEndRef = useRef(null);
@@ -65,12 +67,38 @@ const HDAssistant = () => {
     if (e.key === 'Enter') handleSend();
   };
 
+  const handleLogout = () => {
+    alert("Logging out... ");
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+        setShowUserMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+
+
   return (
     <div className="container">
       {/* Sidebar */}
       <div className={`sidebar ${sidebarCollapsed ? 'collapsed' : ''}`}>
         <div className="sidebar-header">
-          <FaUser className="icon" />
+          <div className = "user-icon-wrapper" ref={userMenuRef}>
+          <FaUser className="icon" onClick={() => setShowUserMenu(!showUserMenu)} />
+          {showUserMenu && (
+            <div classname="user-dropdown">
+              <p>👤 View Profile</p>
+              <p>⚙️ Settings</p>
+              <p onClick={handleLogout}><FaSignOutAlt /> Logout</p>
+              </div>
+          )}
+          </div>
           <FaArrowLeft className="icon" onClick={() => setSidebarCollaspsed(!sidebarCollapsed)} />
         </div>
         <div className="faq-section">
