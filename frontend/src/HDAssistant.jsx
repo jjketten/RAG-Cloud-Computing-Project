@@ -68,22 +68,41 @@ const HDAssistant = () => {
     if (e.key === 'Enter') handleSend();
   };
 
+  const handleLogout = () => {
+    alert("Logging out... ");
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+        setShowUserMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const formatText = (text) => {
+    return text.replace(/\n/g, "<br/>");
+  };
+
   return (
     <div className="container">
       {/* Sidebar */}
       <div className={`sidebar ${sidebarCollapsed ? 'collapsed' : ''}`}>
-        <div className="sidebar-header">
-          <div className = "user-icon-wrapper" ref={userMenuRef}>
-          <FaUser className="icon" onClick={() => setShowUserMenu(!showUserMenu)} />
+        <div className="user-icon-wrapper">
+          <div className="sidebar-header">
+            <FaUser className="icon" onClick={() => setShowUserMenu(!showUserMenu)} />
+            <FaArrowLeft className="icon" onClick={() => setSidebarCollaspsed(!sidebarCollapsed)} />
+          </div>
           {showUserMenu && (
-            <div classname="user-dropdown">
+            <div className="user-dropdown" ref={userMenuRef}>
               <p>👤 View Profile</p>
               <p>⚙️ Settings</p>
               <p onClick={handleLogout}><FaSignOutAlt /> Logout</p>
-              </div>
+            </div>
           )}
-          </div>
-          <FaArrowLeft className="icon" onClick={() => setSidebarCollaspsed(!sidebarCollapsed)} />
         </div>
         <div className="faq-section">
           <h2>FAQs</h2>

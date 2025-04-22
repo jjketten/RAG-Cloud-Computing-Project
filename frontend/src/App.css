@@ -43,8 +43,8 @@ html,
   position: absolute;
   top: 35px;
   left: 0;
-  background: white;
-  border: 1px solid #ddd;
+  background: rgb(26, 26, 26);
+  border: 1px solid #5b5b5b;
   padding: 10px;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
