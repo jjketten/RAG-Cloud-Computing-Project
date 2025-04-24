@@ -83,7 +83,9 @@ const HDAssistant = () => {
   }, []);
 
   const formatText = (text) => {
-    return text.replace(/\n/g, "<br/>");
+    return text.replace(/\n/g, "<br/>")
+      .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+      .replace(/\*(.*?)\*/g, "<em>$1</em>");
   };
 
   return (
