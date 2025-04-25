@@ -1,11 +1,11 @@
 # Cloud-Based RAG System for IT Helpdesk Tickets
-This project demonstrates the use of Retrieval-Augmented Generation (RAG) to power intelligent, real-time support for IT helpdesk queries. It combines Azure AI Search for real-time information retrieval and DeepSeek’s LLM API to generate accurate, context-aware responses to support requests.
+This project demonstrates the use of Retrieval-Augmented Generation (RAG) to power intelligent, real-time support for IT helpdesk queries. It combines Azure AI Search for real-time information retrieval and DeepSeek’s LLM to generate accurate, context-aware responses to support requests.
 
 ## Getting Started
 To run the project locally:
 ### 1. Clone the repository
 ```
-https://github.com/ItsJenny1/RAG-Cloud-Computing-Project.git
+git clone https://github.com/ItsJenny1/RAG-Cloud-Computing-Project.git
 ```
 ### 2. Navigate to frontend folder
 ```
